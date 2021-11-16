@@ -1,0 +1,13 @@
+﻿@model Lab_1.Models.Employee
+
+<form asp-action="Index">
+    <div class="form-group">
+        <label for="EmployeeID">Employee ID</label>
+        <input asp-for="EmployeeID" type="text" class="form-control" id="EmployeeID" aria-describedby="emailHelp" placeholder="Enter enter employee id">
+    </div>
+    <div class="form-group">
+        <label for="EmployeeName">EmployeeName</label>
+        <input asp-for="EmployeeName" type="text" class="form-control" id="EmployeeName" placeholder="Please enter employee name">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
