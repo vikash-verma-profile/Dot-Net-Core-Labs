@@ -55,5 +55,13 @@ namespace Lab_1.Controllers
             ViewBag.ButtonName = "Update";
             return View("Index",employee);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var employee = await _context.Employees.FindAsync(id);
+             _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("EmployeeList");
+        }
     }
 }
