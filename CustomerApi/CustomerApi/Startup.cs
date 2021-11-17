@@ -31,9 +31,11 @@ namespace CustomerApi
             string connectionstring = Configuration.GetConnectionString("CustomerConnection");
             services.AddDbContext<CustomerContext>(options => options.UseSqlServer(connectionstring));
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerApi", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
         }
 
@@ -46,7 +48,7 @@ namespace CustomerApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CustomerApi v1"));
             }
-
+            app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
 
             app.UseRouting();

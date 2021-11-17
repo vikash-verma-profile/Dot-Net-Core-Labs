@@ -30,5 +30,11 @@ namespace CustomerApi.Controllers
              _context.Customers.Add(customer);
              return await _context.SaveChangesAsync();
         }
+        [HttpGet]
+        [Route("GetCustomer")]
+        public async Task<Customer> GetCustomer(int id)
+        {
+            return await  _context.Customers.FindAsync(id);
+        }
     }
 }

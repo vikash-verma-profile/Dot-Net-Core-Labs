@@ -50,5 +50,20 @@ namespace CustomerWebApp.Controllers
             }
             return View(customers);
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var customer = new Customer();
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44318/");
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage res = await client.GetAsync("api/Customer/GetCustomer?id=" + id);
+            if (res.IsSuccessStatusCode)
+            {
+                var customerresponse = res.Content.ReadAsStringAsync().Result;
+                customer = JsonConvert.DeserializeObject<Customer>(customerresponse);
+            }
+            return View("Index", customer);
+        }
     }
 }
