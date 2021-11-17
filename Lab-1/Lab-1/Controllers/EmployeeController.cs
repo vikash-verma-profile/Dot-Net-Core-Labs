@@ -19,19 +19,41 @@ namespace Lab_1.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            //TempData["Message"] = "Hi";
+            ViewBag.ButtonName = "Create";
             return View();
         }
         [HttpPost]
         public  async Task<IActionResult> Index(Employee employee)
         {
-            _context.Add(employee);
-            await _context.SaveChangesAsync();
-            return View("EmployeeList");
+            //var sample = TempData["Message"].ToString();
+            if(employee.ID>0)
+            {
+                _context.Update(employee);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                _context.Add(employee);
+                await _context.SaveChangesAsync();
+            }
+          
+            return RedirectToAction("EmployeeList");
         }
 
         public  async Task<IActionResult> EmployeeList()
         {
             return View(await _context.Employees.ToListAsync());
+        }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var employee = await _context.Employees.FindAsync(id);
+            if(employee==null)
+            {
+                return NotFound();
+            }
+            ViewBag.ButtonName = "Update";
+            return View("Index",employee);
         }
     }
 }
